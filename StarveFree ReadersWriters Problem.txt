@@ -1,0 +1,35 @@
+initially 
+          r_c = 0 ( number of readers inside critical section)
+          rw=1
+          mutex=1
+          wrt =1
+          
+Reader{
+       
+        wait(rw); 
+        wait(mutex);
+
+        r_c++;
+
+        if(r_c==1)wait(wrt);
+
+        signal(mutex); 
+        signal(rw);
+
+        ...reading
+
+        wait(mutex);
+        r_c--;
+        if(r_c==0) signal(wrt);
+        signal(mutex);
+ }
+
+Writer{
+        wait(rw); 
+        wait(wrt); 
+
+        ... writing 
+
+        signal(wrt);   
+        signal(rw); 
+}
